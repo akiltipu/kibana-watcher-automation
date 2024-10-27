@@ -1,0 +1,30 @@
+name: Update/Create Kibana Watcher
+
+on:
+  push:
+    paths:
+      - 'watchers/**'
+  workflow_dispatch:
+
+jobs:
+  update-kibana-watcher:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment variables
+        run: |
+          echo "KIBANA_URL=${{ secrets.KIBANA_URL }}" >> $GITHUB_ENV
+          echo "KIBANA_API=${{ secrets.KIBANA_API }}" >> $GITHUB_ENV
+
+      - name: Update Kibana Watcher
+        run: |
+          for file in watchers/*; do
+            watch_id=$(basename "$file" .json)
+            curl -X PUT "$KIBANA_URL/_watcher/watch/$watch_id" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: ApiKey $KIBANA_API" \
+              -d @"$file"
+          done
