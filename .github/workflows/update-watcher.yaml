@@ -2,6 +2,11 @@ name: Update/Create Kibana Watcher
 
 on:
   push:
+    branches: [main]
+    paths:
+      - 'watchers/**'
+  pull_request:
+    branches: [main]
     paths:
       - 'watchers/**'
   workflow_dispatch:
