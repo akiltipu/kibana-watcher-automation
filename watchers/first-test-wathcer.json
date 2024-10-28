@@ -32,7 +32,7 @@
       "my-logging-action": {
         "logging": {
           "level": "info",
-          "text": "There are {{ctx.payload.hits.total}} documents in your index. Threshold is Test 10."
+          "text": "There are {{ctx.payload.hits.total}} documents in your index. Threshold is Test 10. This line for test."
         }
       }
     }
